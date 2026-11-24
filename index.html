@@ -145,11 +145,16 @@ main{ padding:18px 0 56px; }
 .daytitle .eyebrow{ color:var(--accent); font-size:.72rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
 .daytitle h2{ font-size:1.35rem; font-weight:500; font-style:italic; margin:2px 0 14px; }
 
-.stop{
-  display:flex; gap:12px;
-  padding:14px 0; border-bottom:1px solid var(--line);
-}
+.stop{ border-bottom:1px solid var(--line); }
 .stop:last-child{ border-bottom:none; }
+.stop > summary{
+  display:flex; gap:12px; align-items:flex-start;
+  padding:14px 0; cursor:pointer; list-style:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.stop > summary::-webkit-details-marker{ display:none; }
+.stop > summary::marker{ content:""; }
+.stop > summary:hover .title{ color:var(--accent); }
 .stop .time{
   flex:0 0 64px; padding-top:2px;
   font-family:'JetBrains Mono',monospace; font-size:.78rem; color:var(--muted);
@@ -158,6 +163,19 @@ main{ padding:18px 0 56px; }
 .stop .body{ flex:1; min-width:0; }
 .stop .row1{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; flex-wrap:wrap; }
 .stop .title{ font-weight:600; font-size:.97rem; }
+.chevron{
+  flex:0 0 auto; width:16px; height:16px; margin-top:3px; color:var(--muted);
+  transition:transform .18s ease;
+}
+.stop[open] > summary .chevron{ transform:rotate(180deg); }
+.stop .details-content{
+  padding:0 0 16px 76px; margin-top:-4px;
+}
+.stop .details-content .hint{
+  font-size:.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:.05em;
+  font-weight:600; margin-bottom:6px;
+}
+.stop .details-content .empty{ font-size:.82rem; color:var(--muted); font-style:italic; }
 .badge{
   display:inline-flex; align-items:center; gap:5px;
   font-size:.68rem; font-weight:600; letter-spacing:.02em;
@@ -183,15 +201,27 @@ main{ padding:18px 0 56px; }
 .ledger{ display:flex; flex-direction:column; gap:10px; }
 .lcard{
   background:var(--surface); border:1px solid var(--line); border-radius:12px;
-  padding:12px 14px; box-shadow:var(--shadow);
+  box-shadow:var(--shadow); overflow:hidden;
 }
-.lcard .top{ display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+.lcard > summary{
+  display:flex; justify-content:space-between; gap:10px; align-items:flex-start;
+  padding:12px 14px; cursor:pointer; list-style:none; -webkit-tap-highlight-color:transparent;
+}
+.lcard > summary::-webkit-details-marker{ display:none; }
+.lcard > summary::marker{ content:""; }
+.lcard .chevron{ margin-top:2px; }
+.lcard[open] > summary .chevron{ transform:rotate(180deg); }
 .lcard .name{ font-weight:600; font-size:.92rem; }
 .lcard .cat{ color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; }
 .lcard .cost{ font-family:'JetBrains Mono',monospace; font-weight:600; font-size:.92rem; white-space:nowrap; }
 .lcard .meta{ color:var(--muted); font-size:.8rem; margin-top:5px; }
 .lcard .conf{ margin-top:5px; font-size:.78rem; }
 .lcard .conf b{ font-family:'JetBrains Mono',monospace; }
+.lcard .details-content{ padding:0 14px 14px; border-top:1px solid var(--line); margin-top:-1px; padding-top:10px; }
+.lcard .hint{
+  font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.05em;
+  font-weight:600; margin-bottom:6px;
+}
 .totals{
   display:flex; justify-content:space-between; align-items:baseline;
   padding:14px 2px 4px; margin-top:4px; border-top:2px solid var(--line);
@@ -213,6 +243,7 @@ footer{ text-align:center; color:var(--muted); font-size:.74rem; padding:10px 0 
 @media (max-width:480px){
   .brand h1{ font-size:1.25rem; }
   .stop .time{ flex-basis:54px; font-size:.72rem; }
+  .stop .details-content{ padding-left:66px; }
 }
 </style>
 </head>
@@ -248,8 +279,8 @@ const DAYS = [
      conf:"WAALKC", site:{label:"aa.com", url:"https://www.aa.com"},
      map:"Dallas Fort Worth International Airport" },
    { time:"6:30 PM", title:"ORD → KEF — Icelandair FI852", type:"Flight", status:"booked",
-     notes:"Departs 6:30pm, arrives 6:45am Dec 30. Saga Premium Flex / Economy Flex.",
-     conf:"FCSETK (AA) · AS7VVE (Icelandair)", site:{label:"icelandair.com", url:"https://www.icelandair.com"},
+     notes:"Departs 6:30pm (Terminal 5), arrives 6:45am Dec 30. Saga Premium Flex. 2×32kg checked bags included per passenger.",
+     conf:"FCSETK (AA) · B6QHN8 (Icelandair)", site:{label:"icelandair.com", url:"https://www.icelandair.com"},
      map:"Chicago O'Hare International Airport" },
  ]},
  { id:"day-2", num:2, date:"Wed · Dec 30", theme:"Arrival · Blue Lagoon · Reykjavik", stops:[
@@ -389,8 +420,8 @@ const DAYS = [
    { time:"1:30 PM", title:"Check in + Security at KEF", type:"Logistics",
      notes:"Icelandair recommends arriving 2.5 hrs before departure. Saga Lounge access if flying Premium." },
    { time:"4:30 PM", title:"KEF → ORD — Icelandair FI853", type:"Flight", status:"booked",
-     notes:"Departs 4:30pm, arrives 5:20pm.",
-     conf:"FCSETK (AA) · AS7VVE (Icelandair)", site:{label:"icelandair.com", url:"https://www.icelandair.com"},
+     notes:"Departs 4:30pm, arrives 5:20pm (Terminal 5). Saga Premium Flex.",
+     conf:"FCSETK (AA) · B6QHN8 (Icelandair)", site:{label:"icelandair.com", url:"https://www.icelandair.com"},
      map:"Keflavik International Airport" },
    { time:"7:01 PM", title:"ORD → DFW — AA3327", type:"Flight", status:"booked",
      notes:"Departs 7:01pm, arrives 9:50pm. Nonstop, 2h 49m, seats 17E/17F. ~1h 40m connection at ORD.",
@@ -401,8 +432,8 @@ const DAYS = [
 
 const BOOKINGS = [
  { cat:"Flights", name:"DFW → ORD — AA2710 (2 travelers)", dates:"Dec 29", status:"booked", conf:"WAALKC", cost:null, note:"Economy · seats 11A/11B · aa.com" },
- { cat:"Flights", name:"ORD → KEF — Icelandair FI852 (2 travelers)", dates:"Dec 29", status:"booked", conf:"FCSETK / AS7VVE", cost:2261, note:"Economy Flex or Saga Premium Flex · icelandair.com" },
- { cat:"Flights", name:"KEF → ORD — Icelandair FI853 (2 travelers)", dates:"Jan 4", status:"booked", conf:"FCSETK / AS7VVE", cost:null, note:"Economy Flex or Saga Premium Flex · icelandair.com" },
+ { cat:"Flights", name:"ORD → KEF — Icelandair FI852 (2 travelers)", dates:"Dec 29", status:"booked", conf:"FCSETK / B6QHN8", cost:2261, note:"Saga Premium Flex · Terminal 5 (ORD) · 2×32kg bags incl. · icelandair.com" },
+ { cat:"Flights", name:"KEF → ORD — Icelandair FI853 (2 travelers)", dates:"Jan 4", status:"booked", conf:"FCSETK / B6QHN8", cost:null, note:"Saga Premium Flex · Terminal 5 (ORD) · 2×32kg bags incl. · icelandair.com" },
  { cat:"Flights", name:"ORD → DFW — AA3327 (2 travelers)", dates:"Jan 4", status:"booked", conf:"NGJUDC", cost:null, note:"Seats 17E/17F · aa.com" },
  { cat:"Transport", name:"Ford Kuga AWD — Saga Car Rental", dates:"Dec 30 – Jan 4", status:"booked", conf:"26-KEF-2109", cost:847, note:"5 days · AWD · Premium Protection · paid in full · sagacarrental.is" },
  { cat:"Lodging", name:"Alda Hotel — King Deluxe w/ Balcony", dates:"Dec 30", status:"booked", conf:"30718SG104695", cost:655, note:"Refundable daily rate · pay on arrival" },
@@ -466,6 +497,7 @@ function mapUrl(q){ return "https://www.google.com/maps/search/?api=1&query=" + 
 function esc(s){ return (s==null?"":String(s)).replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
 const pinSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.3"/></svg>';
 const linkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M10 14 20 4M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>';
+const chevronSvg = '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M6 9l6 6 6-6"/></svg>';
 
 function statusBadge(status){
   if(status==="booked") return '<span class="badge status-booked"><span class="dot"></span>Booked</span>';
@@ -475,7 +507,9 @@ function statusBadge(status){
 }
 
 function renderStop(s){
-  let out = '<div class="stop">';
+  const hasDetails = !!(s.conf || s.map || s.site);
+  let out = '<details class="stop">';
+  out += '<summary>';
   out += '<div class="time">'+esc(s.time)+'</div>';
   out += '<div class="body">';
   out += '<div class="row1"><span class="title">'+esc(s.title)+'</span>';
@@ -484,12 +518,20 @@ function renderStop(s){
   out += statusBadge(s.status);
   out += '</span></div>';
   if(s.notes) out += '<div class="notes">'+esc(s.notes)+'</div>';
-  if(s.conf) out += '<div class="conf">Confirmation: <b class="mono copyconf" data-conf="'+esc(s.conf)+'" title="Tap to copy" style="cursor:pointer">'+esc(s.conf)+'</b></div>';
-  let links = [];
-  if(s.map) links.push('<a href="'+mapUrl(s.map)+'" target="_blank" rel="noopener">'+pinSvg+'Map</a>');
-  if(s.site) links.push('<a href="'+s.site.url+'" target="_blank" rel="noopener">'+linkSvg+esc(s.site.label)+'</a>');
-  if(links.length) out += '<div class="linkrow">'+links.join("")+'</div>';
-  out += '</div></div>';
+  out += '</div>';
+  if(hasDetails) out += chevronSvg;
+  out += '</summary>';
+  if(hasDetails){
+    out += '<div class="details-content">';
+    out += '<div class="hint">Confirmation &amp; links</div>';
+    if(s.conf) out += '<div class="conf">Confirmation: <b class="mono copyconf" data-conf="'+esc(s.conf)+'" title="Tap to copy" style="cursor:pointer">'+esc(s.conf)+'</b></div>';
+    let links = [];
+    if(s.map) links.push('<a href="'+mapUrl(s.map)+'" target="_blank" rel="noopener">'+pinSvg+'Map</a>');
+    if(s.site) links.push('<a href="'+s.site.url+'" target="_blank" rel="noopener">'+linkSvg+esc(s.site.label)+'</a>');
+    if(links.length) out += '<div class="linkrow">'+links.join("")+'</div>';
+    out += '</div>';
+  }
+  out += '</details>';
   return out;
 }
 
@@ -508,14 +550,23 @@ function renderBookings(){
   let total = 0;
   BOOKINGS.forEach(b=>{
     if(typeof b.cost === "number") total += b.cost;
-    out += '<div class="lcard"><div class="top">';
-    out += '<div><div class="cat">'+esc(b.cat)+'</div><div class="name">'+esc(b.name)+'</div></div>';
+    const hasDetails = !!(b.conf || b.note);
+    out += '<details class="lcard"><summary>';
+    out += '<div><div class="cat">'+esc(b.cat)+'</div><div class="name">'+esc(b.name)+'</div>';
+    out += '<div class="meta">'+esc(b.dates)+' &nbsp;·&nbsp; '+statusBadge(b.status)+'</div></div>';
+    out += '<span style="display:flex;align-items:flex-start;gap:8px">';
     out += '<div class="cost">'+(b.cost!=null ? "$"+b.cost.toLocaleString() : "—")+'</div>';
-    out += '</div>';
-    out += '<div class="meta">'+esc(b.dates)+' &nbsp;·&nbsp; '+statusBadge(b.status)+'</div>';
-    if(b.conf) out += '<div class="conf">Confirmation: <b class="mono copyconf" data-conf="'+esc(b.conf)+'" style="cursor:pointer" title="Tap to copy">'+esc(b.conf)+'</b></div>';
-    if(b.note) out += '<div class="meta" style="margin-top:4px">'+esc(b.note)+'</div>';
-    out += '</div>';
+    if(hasDetails) out += chevronSvg;
+    out += '</span>';
+    out += '</summary>';
+    if(hasDetails){
+      out += '<div class="details-content">';
+      out += '<div class="hint">Confirmation &amp; notes</div>';
+      if(b.conf) out += '<div class="conf">Confirmation: <b class="mono copyconf" data-conf="'+esc(b.conf)+'" style="cursor:pointer" title="Tap to copy">'+esc(b.conf)+'</b></div>';
+      if(b.note) out += '<div class="meta" style="margin-top:4px">'+esc(b.note)+'</div>';
+      out += '</div>';
+    }
+    out += '</details>';
   });
   out += '</div>';
   out += '<div class="totals"><span class="label">Estimated total (USD)</span><span class="amt">$'+total.toLocaleString()+'</span></div>';
