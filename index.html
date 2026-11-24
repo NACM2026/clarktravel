@@ -119,6 +119,13 @@ header.top{
   border-radius:8px; padding:5px 10px; font-size:.78rem; color:var(--muted);
 }
 .stat b{ font-family:'JetBrains Mono',monospace; color:var(--fg); font-size:.85rem; }
+a.stat{
+  text-decoration:none; cursor:pointer; -webkit-tap-highlight-color:transparent;
+  transition:background .12s ease, border-color .12s ease;
+}
+a.stat:hover{ border-color:var(--accent); }
+a.stat.active{ background:var(--accent); border-color:var(--accent); color:var(--accent-fg); }
+a.stat.active b{ color:var(--accent-fg); }
 
 nav.tabs{
   display:flex; gap:6px; overflow-x:auto; -webkit-overflow-scrolling:touch;
@@ -575,6 +582,39 @@ function renderBookings(){
   return out;
 }
 
+function renderFiltered(routeId, eyebrow, title, matchFn, emptyMsg){
+  let out = '<div class="view" id="view-'+routeId+'">';
+  out += '<div class="daytitle"><span class="eyebrow">'+esc(eyebrow)+'</span><h2>'+esc(title)+'</h2></div>';
+  const items = BOOKINGS.filter(matchFn);
+  if(!items.length){
+    out += '<div class="lcard" style="padding:14px"><div class="meta">'+esc(emptyMsg)+'</div></div>';
+    out += '</div>';
+    return out;
+  }
+  out += '<div class="ledger">';
+  items.forEach(b=>{
+    const hasDetails = !!(b.conf || b.note);
+    out += '<details class="lcard"><summary>';
+    out += '<div><div class="cat">'+esc(b.cat)+'</div><div class="name">'+esc(b.name)+'</div>';
+    out += '<div class="meta">'+esc(b.dates)+' &nbsp;·&nbsp; '+statusBadge(b.status)+'</div></div>';
+    out += '<span style="display:flex;align-items:flex-start;gap:8px">';
+    out += '<div class="cost">'+(b.cost!=null ? "$"+b.cost.toLocaleString() : "—")+'</div>';
+    if(hasDetails) out += chevronSvg;
+    out += '</span>';
+    out += '</summary>';
+    if(hasDetails){
+      out += '<div class="details-content">';
+      out += '<div class="hint">Confirmation &amp; notes</div>';
+      if(b.conf) out += '<div class="conf">Confirmation: <b class="mono copyconf" data-conf="'+esc(b.conf)+'" style="cursor:pointer" title="Tap to copy">'+esc(b.conf)+'</b></div>';
+      if(b.note) out += '<div class="meta" style="margin-top:4px">'+esc(b.note)+'</div>';
+      out += '</div>';
+    }
+    out += '</details>';
+  });
+  out += '</div></div>';
+  return out;
+}
+
 function renderPacking(){
   let out = '<div class="view" id="view-packing">';
   out += '<div class="daytitle"><span class="eyebrow">Before you fly</span><h2>Packing &amp; reminders</h2></div>';
@@ -597,6 +637,10 @@ function renderPacking(){
 let viewsHtml = "";
 DAYS.forEach(d=> viewsHtml += renderDay(d));
 viewsHtml += renderBookings();
+viewsHtml += renderFiltered("todo", "Still open", "Things to book",
+  b=>b.status==="todo", "Everything's booked — nothing left to do.");
+viewsHtml += renderFiltered("confirmed", "Locked in", "Confirmed bookings",
+  b=>b.status==="booked"||b.status==="paid", "Nothing confirmed yet.");
 viewsHtml += renderPacking();
 document.getElementById("views").innerHTML = viewsHtml;
 
@@ -612,18 +656,21 @@ const bookedCount = BOOKINGS.filter(b=>b.status==="booked"||b.status==="paid").l
 const todoCount = BOOKINGS.filter(b=>b.status==="todo").length;
 const total = BOOKINGS.reduce((a,b)=> a + (b.cost||0), 0);
 document.getElementById("statRow").innerHTML =
-  '<span class="stat">Confirmed <b>'+bookedCount+'</b></span>'+
-  '<span class="stat">To book <b>'+todoCount+'</b></span>'+
+  '<a class="stat" href="#confirmed" data-route="confirmed">Confirmed <b>'+bookedCount+'</b></a>'+
+  '<a class="stat" href="#todo" data-route="todo">To book <b>'+todoCount+'</b></a>'+
   '<span class="stat">Est. total <b>$'+total.toLocaleString()+'</b></span>';
 
 /* ---------------- routing ---------------- */
-const validRoutes = DAYS.map(d=>d.id).concat(["bookings","packing"]);
+const validRoutes = DAYS.map(d=>d.id).concat(["bookings","packing","todo","confirmed"]);
 function go(route){
   if(!validRoutes.includes(route)) route = DAYS[0].id;
   document.querySelectorAll(".view").forEach(v=> v.classList.remove("active"));
   const el = document.getElementById("view-"+route);
   if(el) el.classList.add("active");
   document.querySelectorAll("nav.tabs a").forEach(a=>{
+    a.classList.toggle("active", a.getAttribute("data-route")===route);
+  });
+  document.querySelectorAll("a.stat").forEach(a=>{
     a.classList.toggle("active", a.getAttribute("data-route")===route);
   });
   const activeTab = document.querySelector('nav.tabs a[data-route="'+route+'"]');
