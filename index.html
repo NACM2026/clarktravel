@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Iceland Winter Journey</title>
+<meta name="description" content="Day-by-day itinerary, confirmations and map links for Camille &amp; Tony's Iceland trip, Dec 29 &ndash; Jan 4.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f5f6;
+  --surface:#ffffff;
+  --surface-2:#e9eef0;
+  --fg:#101a1d;
+  --muted:#53666c;
+  --line:#d8e0e2;
+  --accent:#0f7a63;
+  --accent-fg:#ffffff;
+  --accent2:#6a4fd6;
+  --amber:#b4740e;
+  --amber-bg:#fdf1dd;
+  --amber-fg:#5c3a07;
+  --green-bg:#e3f3ec;
+  --green-fg:#0f5c47;
+  --blue-bg:#e8eef9;
+  --blue-fg:#2a4a8f;
+  --shadow: 0 1px 2px rgba(16,26,29,.05), 0 6px 20px -8px rgba(16,26,29,.18);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0a1214;
+    --surface:#111d20;
+    --surface-2:#172629;
+    --fg:#eaf2f1;
+    --muted:#92a6a9;
+    --line:#223033;
+    --accent:#3ddcae;
+    --accent-fg:#05201a;
+    --accent2:#b1a0ff;
+    --amber:#f2b03d;
+    --amber-bg:#2e2311;
+    --amber-fg:#f6d591;
+    --green-bg:#0f2b22;
+    --green-fg:#5fe0b6;
+    --blue-bg:#15233c;
+    --blue-fg:#9db6ea;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px -10px rgba(0,0,0,.6);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0a1214;
+  --surface:#111d20;
+  --surface-2:#172629;
+  --fg:#eaf2f1;
+  --muted:#92a6a9;
+  --line:#223033;
+  --accent:#3ddcae;
+  --accent-fg:#05201a;
+  --accent2:#b1a0ff;
+  --amber:#f2b03d;
+  --amber-bg:#2e2311;
+  --amber-fg:#f6d591;
+  --green-bg:#0f2b22;
+  --green-fg:#5fe0b6;
+  --blue-bg:#15233c;
+  --blue-fg:#9db6ea;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px -10px rgba(0,0,0,.6);
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{ margin:0; }
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:'Inter',system-ui,sans-serif;
+  padding-left:max(16px, env(safe-area-inset-left,0px));
+  padding-right:max(16px, env(safe-area-inset-right,0px));
+}
+body::before{
+  content:"";
+  position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px);
+  z-index:20; background:var(--surface);
+}
+h1,h2,h3,.display{ font-family:'Fraunces',Georgia,serif; text-wrap:balance; }
+.mono{ font-family:'JetBrains Mono',ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+a{ color:inherit; }
+img{ max-width:100%; }
+[hidden]{ display:none !important; }
+
+.wrap{ max-width:760px; margin:0 auto; }
+
+header.top{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:15;
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+  padding-block:14px 0;
+}
+.topinner{ max-width:760px; margin:0 auto; }
+.brand{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.brand h1{ font-size:1.5rem; font-weight:600; margin:0; letter-spacing:-.01em; }
+.brand .dates{ color:var(--muted); font-size:.82rem; font-family:'JetBrains Mono',monospace; white-space:nowrap; }
+.stats{ display:flex; gap:8px; margin:10px 0 12px; flex-wrap:wrap; }
+.stat{
+  display:flex; align-items:baseline; gap:5px;
+  background:var(--surface-2); border:1px solid var(--line);
+  border-radius:8px; padding:5px 10px; font-size:.78rem; color:var(--muted);
+}
+.stat b{ font-family:'JetBrains Mono',monospace; color:var(--fg); font-size:.85rem; }
+
+nav.tabs{
+  display:flex; gap:6px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  padding-bottom:12px; scrollbar-width:none;
+}
+nav.tabs::-webkit-scrollbar{ display:none; }
+nav.tabs a{
+  flex:0 0 auto; text-decoration:none;
+  display:flex; flex-direction:column; align-items:center; gap:1px;
+  padding:7px 13px; border-radius:10px;
+  border:1px solid var(--line); background:var(--surface);
+  font-size:.72rem; color:var(--muted); line-height:1.25;
+}
+nav.tabs a b{ color:var(--fg); font-size:.82rem; font-weight:600; }
+nav.tabs a.active{ background:var(--accent); border-color:var(--accent); color:var(--accent-fg); }
+nav.tabs a.active b{ color:var(--accent-fg); }
+nav.tabs a.sep{ margin-left:4px; padding-left:13px; border-left:1px solid var(--line); border-radius:10px; }
+
+main{ padding:18px 0 56px; }
+.view{ display:none; }
+.view.active{ display:block; }
+
+.daytitle{ margin-bottom:4px; }
+.daytitle .eyebrow{ color:var(--accent); font-size:.72rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
+.daytitle h2{ font-size:1.35rem; font-weight:500; font-style:italic; margin:2px 0 14px; }
+
+.stop{
+  display:flex; gap:12px;
+  padding:14px 0; border-bottom:1px solid var(--line);
+}
+.stop:last-child{ border-bottom:none; }
+.stop .time{
+  flex:0 0 64px; padding-top:2px;
+  font-family:'JetBrains Mono',monospace; font-size:.78rem; color:var(--muted);
+  white-space:nowrap;
+}
+.stop .body{ flex:1; min-width:0; }
+.stop .row1{ display:flex; align-items:flex-start; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+.stop .title{ font-weight:600; font-size:.97rem; }
+.badge{
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:.68rem; font-weight:600; letter-spacing:.02em;
+  padding:2px 8px 2px 6px; border-radius:99px; white-space:nowrap;
+}
+.badge .dot{ width:6px; height:6px; border-radius:50%; background:currentColor; }
+.badge.status-booked{ background:var(--green-bg); color:var(--green-fg); }
+.badge.status-paid{ background:var(--blue-bg); color:var(--blue-fg); }
+.badge.status-todo{ background:var(--amber-bg); color:var(--amber-fg); }
+.badge.type{ background:var(--surface-2); color:var(--muted); font-weight:500; }
+
+.stop .notes{ color:var(--muted); font-size:.87rem; line-height:1.5; margin-top:4px; }
+.stop .conf{ margin-top:6px; font-size:.76rem; color:var(--muted); }
+.stop .conf b{ color:var(--fg); font-weight:600; }
+.linkrow{ display:flex; gap:14px; margin-top:7px; flex-wrap:wrap; }
+.linkrow a{
+  font-size:.76rem; font-weight:600; color:var(--accent); text-decoration:none;
+  display:inline-flex; align-items:center; gap:4px;
+}
+.linkrow a:hover{ text-decoration:underline; }
+.linkrow svg{ width:12px; height:12px; flex:none; }
+
+.ledger{ display:flex; flex-direction:column; gap:10px; }
+.lcard{
+  background:var(--surface); border:1px solid var(--line); border-radius:12px;
+  padding:12px 14px; box-shadow:var(--shadow);
+}
+.lcard .top{ display:flex; justify-content:space-between; gap:10px; align-items:flex-start; }
+.lcard .name{ font-weight:600; font-size:.92rem; }
+.lcard .cat{ color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; }
+.lcard .cost{ font-family:'JetBrains Mono',monospace; font-weight:600; font-size:.92rem; white-space:nowrap; }
+.lcard .meta{ color:var(--muted); font-size:.8rem; margin-top:5px; }
+.lcard .conf{ margin-top:5px; font-size:.78rem; }
+.lcard .conf b{ font-family:'JetBrains Mono',monospace; }
+.totals{
+  display:flex; justify-content:space-between; align-items:baseline;
+  padding:14px 2px 4px; margin-top:4px; border-top:2px solid var(--line);
+}
+.totals .label{ font-size:.85rem; color:var(--muted); }
+.totals .amt{ font-family:'JetBrains Mono',monospace; font-size:1.3rem; font-weight:700; }
+
+.pgroup{ margin-bottom:20px; }
+.pgroup h3{ font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--accent2); margin:0 0 8px; font-family:'Inter'; font-weight:700; }
+.pitem{ display:flex; gap:10px; padding:8px 0; border-bottom:1px solid var(--line); align-items:flex-start; }
+.pitem:last-child{ border-bottom:none; }
+.pitem input[type=checkbox]{ margin-top:3px; width:16px; height:16px; accent-color:var(--accent); flex:none; }
+.pitem label{ font-size:.88rem; font-weight:500; display:block; }
+.pitem .sub{ color:var(--muted); font-size:.8rem; margin-top:1px; }
+.pitem.checked label, .pitem.checked .sub{ text-decoration:line-through; opacity:.5; }
+
+footer{ text-align:center; color:var(--muted); font-size:.74rem; padding:10px 0 30px; }
+
+@media (max-width:480px){
+  .brand h1{ font-size:1.25rem; }
+  .stop .time{ flex-basis:54px; font-size:.72rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="top">
+  <div class="topinner">
+    <div class="brand">
+      <h1>Iceland Winter Journey</h1>
+      <span class="dates">DEC 29 – JAN 4</span>
+    </div>
+    <div class="stats" id="statRow"></div>
+    <nav class="tabs" id="tabRail"></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="views"></div>
+</main>
+
+<footer>Camille &amp; Tony · 2 travelers · tap a confirmation to copy it</footer>
+</div>
+
+<script>
+(function(){
+
+/* ---------------- data ---------------- */
+const DAYS = [
+ { id:"day-1", num:1, date:"Tue · Dec 29", theme:"Depart Dallas/Fort Worth", stops:[
+   { time:"11:41 AM", title:"DFW → ORD — AA2710", type:"Flight", status:"booked",
+     notes:"Nonstop, 2h 28m. Seats 11A/11B.",
+     conf:"WAALKC", site:{label:"aa.com", url:"https://www.aa.com"},
+     map:"Dallas Fort Worth International Airport" },
+   { time:"6:30 PM", title:"ORD → KEF — Icelandair FI852", type:"Flight", status:"booked",
+     notes:"Departs 6:30pm, arrives 6:45am Dec 30. Saga Premium Flex / Economy Flex.",
+     conf:"FCSETK (AA) · AS7VVE (Icelandair)", site:{label:"icelandair.com", url:"https://www.icelandair.com"},
+     map:"Chicago O'Hare International Airport" },
+ ]},
+ { id:"day-2", num:2, date:"Wed · Dec 30", theme:"Arrival · Blue Lagoon · Reykjavik", stops:[
+   { time:"5:50 AM", title:"Arrive Keflavík (KEF)", type:"Flight", status:"booked",
+     notes:"Clear immigration, collect bags. Allow ~1.5 hrs to exit terminal.",
+     map:"Keflavik International Airport" },
+   { time:"7:30 AM", title:"Pick up Ford Kuga — Saga Car Rental", type:"Logistics", status:"booked",
+     notes:"4WD SUV, Premium Protection included. Promo: YOURSAGA.",
+     conf:"26-KEF-2109", site:{label:"sagacarrental.is", url:"https://sagacarrental.is"},
+     map:"Saga Car Rental Keflavik Airport" },
+   { time:"8:00 AM", title:"Blue Lagoon — Arrival Soak", type:"Spa", status:"todo",
+     notes:"Comfort package minimum (towel, mud mask, drink). Book the 8am slot — perfect jet-lag cure, 20 min from airport.",
+     site:{label:"bluelagoon.com", url:"https://www.bluelagoon.com"},
+     map:"Blue Lagoon Iceland" },
+   { time:"11:00 AM", title:"Drive to Reykjavik", type:"Logistics",
+     notes:"~50 min from Blue Lagoon to city center." },
+   { time:"12:00 PM", title:"Check in — Alda Hotel", type:"Lodging", status:"booked",
+     notes:"King Deluxe w/ Balcony. Laugavegur city center. Refundable rate $655. Outdoor hot tub + sauna on site.",
+     conf:"30718SG104695", site:{label:"icelandhotelcollectionbyberjaya.com", url:"https://www.icelandhotelcollectionbyberjaya.com"},
+     map:"Alda Hotel Reykjavik, Laugavegur 66" },
+   { time:"2:00 PM", title:"Explore Reykjavik — Hallgrímskirkja", type:"Sightseeing",
+     notes:"Iceland's iconic basalt cathedral. Take the elevator to the tower for panoramic city views.",
+     map:"Hallgrimskirkja Reykjavik" },
+   { time:"3:30 PM", title:"Sun Voyager + Old Harbour", type:"Sightseeing",
+     notes:"Iconic Viking ship sculpture. Great Northern Lights spot if skies clear tonight.",
+     map:"Sun Voyager Reykjavik" },
+   { time:"4:30 PM", title:"Perlan Museum", type:"Museum",
+     notes:"Immersive exhibits on glaciers, volcanoes & Northern Lights. Great trip orientation. Open 9am–9pm.",
+     site:{label:"perlan.is", url:"https://perlan.is"}, map:"Perlan Museum Reykjavik" },
+   { time:"6:00 PM", title:"ÓX Restaurant — ring doorbell", type:"Dining", status:"paid",
+     notes:"Michelin-starred speakeasy, 17 seats. Dinner starts 6:15pm. ~4 hr experience incl. cocktails & 20-course tasting menu. Prepaid in full: ISK 144,000 (~$1,145) for 2, under Camille.",
+     conf:"Receipt #9552594", site:{label:"ox.restaurant", url:"https://ox.restaurant"},
+     map:"OX Restaurant Reykjavik" },
+   { time:"10:30 PM", title:"Return to Alda Hotel", type:"Logistics",
+     notes:"Short walk back along Laugavegur. Aurora check on the way — Vedur app." },
+ ]},
+ { id:"day-3", num:3, date:"Thu · Dec 31", theme:"Reykjavik · Sky Lagoon · Drive to Lodge (NYE!)", stops:[
+   { time:"9:00 AM", title:"Breakfast at Alda Hotel", type:"Dining",
+     notes:"Daily buffet breakfast included. Fuel up for the day." },
+   { time:"10:00 AM", title:"Checkout — Alda Hotel", type:"Logistics",
+     notes:"Checkout by 11am. Load car and head out." },
+   { time:"10:30 AM", title:"National Museum of Iceland", type:"Museum",
+     notes:"Iceland's premier history museum, Viking settlement to modern era. Free parking nearby.",
+     site:{label:"thjodminjasafn.is", url:"https://www.thjodminjasafn.is"}, map:"National Museum of Iceland" },
+   { time:"12:30 PM", title:"Lunch — Reykjavik city center", type:"Dining",
+     notes:"Try Café Loki (traditional Icelandic) near Hallgrímskirkja, or grab something on Laugavegur.",
+     map:"Cafe Loki Reykjavik" },
+   { time:"2:00 PM", title:"Sky Lagoon", type:"Spa", status:"todo",
+     notes:"Stunning clifftop geothermal pool overlooking the ocean. The 7-step Skjól ritual: lagoon, cold plunge, sauna, steam, mist, body scrub, shower. ~$60pp. Book ahead.",
+     site:{label:"skylagoon.com", url:"https://www.skylagoon.com"}, map:"Sky Lagoon Reykjavik" },
+   { time:"5:00 PM", title:"Stock up — grocery stop", type:"Logistics",
+     notes:"Nettó or Bónus supermarket. Buy breakfast items, snacks, champagne for NYE at the lodge!",
+     map:"Bonus Supermarket Reykjavik" },
+   { time:"5:30 PM", title:"Drive to Panorama Glass Lodge West", type:"Logistics",
+     notes:"~55 min from Reykjavik to Akranes area. Smart lock code sent by email. Check in from 3pm." },
+   { time:"6:30 PM", title:"Check in — Heimdall Cabin", type:"Lodging", status:"paid",
+     notes:"Panorama Glass Lodge West. Dates Dec 31–Jan 3. Private hot tub, glass ceiling, ocean + Snæfellsnes views. Bathrobes & slippers included. €30 refund due.",
+     conf:"Booking #63919", site:{label:"panoramaglasslodge.com", url:"https://panoramaglasslodge.com"},
+     map:"Panorama Glass Lodge West Akranes" },
+   { time:"8:00 PM", title:"NYE Dinner at the lodge", type:"Dining",
+     notes:"Cook in the fully equipped kitchen, or bring something nice. Champagne in the hot tub!" },
+   { time:"12:00 AM", title:"New Year's midnight — hot tub + aurora", type:"Experience",
+     notes:"Watch fireworks on the horizon + Northern Lights from your glass cabin. Happy New Year!" },
+ ]},
+ { id:"day-4", num:4, date:"Fri · Jan 1", theme:"New Year's Day · Relax at Lodge", stops:[
+   { time:"Morning", title:"Slow start — coffee under the glass ceiling", type:"Experience",
+     notes:"Sleep in. Enjoy the lodge. Check aurora photos from last night." },
+   { time:"11:00 AM", title:"Explore Borgarnes area", type:"Sightseeing",
+     notes:"Short drive to Borgarnes town (~15 min). Waterfront walk, Settlement Centre museum, fjord views.",
+     map:"Borgarnes Iceland" },
+   { time:"1:00 PM", title:"Lunch — Bjargarsteinn Restaurant", type:"Dining", status:"todo",
+     notes:"Gourmet seafood in Borgarnes — lobster, scallops, cod. Open daily noon–11pm. Booking recommended.",
+     map:"Bjargarsteinn Mathus Borgarnes" },
+   { time:"3:00 PM", title:"Afternoon at lodge", type:"Experience",
+     notes:"Hot tub, hammock, read, nap. Enjoy the views of Snæfellsnes peninsula across the water." },
+   { time:"Evening", title:"Aurora watch from hot tub", type:"Experience",
+     notes:"New Year's Night — dark skies, private hot tub. Check Vedur app for KP index.",
+     site:{label:"vedur.is", url:"https://www.vedur.is"} },
+ ]},
+ { id:"day-5", num:5, date:"Sat · Jan 2", theme:"Langjökull Ice Cave Tour", stops:[
+   { time:"8:00 AM", title:"Depart lodge — drive to Húsafell", type:"Logistics",
+     notes:"~1 hr drive from lodge to Húsafell/Langjökull meeting point. Leave early — limited daylight." },
+   { time:"10:00 AM", title:"Langjökull Ice Cave Tour", type:"Activity", status:"booked",
+     notes:"Man-made ice tunnel inside Langjökull glacier, from Húsafell. 3–4 hr tour, arrive 15 min early. Paid in full: ISK 55,800 (~$444) for 2 adults.",
+     conf:"Ticket ARC-T137654036 · Invoice C-561245575", site:{label:"intotheglacier.is", url:"https://intotheglacier.is"},
+     map:"Husafell Activity Centre Iceland" },
+   { time:"1:00 PM", title:"Hraunfossar & Barnafoss Waterfalls", type:"Nature",
+     notes:"Two stunning waterfalls side by side. Hraunfossar seeps through ancient lava — intense blue in winter. Easy short walk.",
+     map:"Hraunfossar Waterfall Iceland" },
+   { time:"2:30 PM", title:"Deildartunguhver Hot Spring", type:"Nature",
+     notes:"Europe's most powerful hot spring — water at nearly 100°C. Dramatic steam in cold January air.",
+     map:"Deildartunguhver Hot Spring Iceland" },
+   { time:"4:00 PM", title:"Return to lodge", type:"Logistics",
+     notes:"~1 hr drive back to Heimdall cabin. Last night at Panorama." },
+   { time:"Evening", title:"Final night at Panorama Glass Lodge", type:"Experience",
+     notes:"Last aurora watch. Hot tub under the stars. Enjoy every moment — checkout tomorrow." },
+ ]},
+ { id:"day-6", num:6, date:"Sun · Jan 3", theme:"Checkout · Private Golden Circle Tour", stops:[
+   { time:"9:00 AM", title:"Checkout — Panorama Glass Lodge West", type:"Logistics",
+     notes:"Checkout by 10am. Load car, drive toward Reykjavik (~55 min)." },
+   { time:"10:30 AM", title:"Private Golden Circle Tour — pickup", type:"Tour", status:"booked",
+     notes:"Private guided tour with Bjarni. $986 total for 2 — card auto-charges Jan 1, 2027. Counterclockwise route to avoid crowds, flexible relaxed pace.",
+     conf:"1765053271 / 1382395547", site:{label:"viator.com", url:"https://www.viator.com"} },
+   { time:"11:00 AM", title:"Þingvellir National Park", type:"Nature",
+     notes:"Private guided walk of the tectonic rift. Expert context on Icelandic history and geology.",
+     map:"Thingvellir National Park Iceland" },
+   { time:"1:00 PM", title:"Geysir Hot Spring Area", type:"Nature",
+     notes:"Strokkur eruptions with your private guide. No crowds on a private tour.",
+     map:"Geysir Hot Spring Area Iceland" },
+   { time:"2:30 PM", title:"Gullfoss Waterfall", type:"Nature",
+     notes:"The Golden Waterfall. Your guide takes you to the best winter viewpoints.",
+     map:"Gullfoss Waterfall Iceland" },
+   { time:"3:30 PM", title:"Kerið Volcanic Crater", type:"Nature",
+     notes:"Red crater lake. Guide explains the volcanic history. Small entry fee.",
+     map:"Kerid Crater Iceland" },
+   { time:"5:00 PM", title:"Drop off — Reykjavik", type:"Logistics",
+     notes:"Tour ends in Reykjavik. Check in to Alda Hotel for the final night." },
+   { time:"5:30 PM", title:"Check in — Alda Hotel", type:"Lodging", status:"booked",
+     notes:"King Deluxe w/ Balcony — same room type as Dec 30. Refundable Daily Rate $319.",
+     conf:"30718SG104696", site:{label:"icelandhotelcollectionbyberjaya.com", url:"https://www.icelandhotelcollectionbyberjaya.com"},
+     map:"Alda Hotel Reykjavik, Laugavegur 66" },
+   { time:"7:30 PM", title:"Farewell dinner — Reykjavik", type:"Dining", status:"todo",
+     notes:"Last dinner in Iceland. Try Sumac (ÓX's sister restaurant next door) or another Laugavegur favorite.",
+     map:"Sumac Reykjavik" },
+ ]},
+ { id:"day-7", num:7, date:"Mon · Jan 4", theme:"Departure Day", stops:[
+   { time:"9:00 AM", title:"Checkout — Alda Hotel", type:"Logistics",
+     notes:"Checkout by 11am. Load car for the airport." },
+   { time:"10:00 AM", title:"Last morning in Reykjavik", type:"Sightseeing",
+     notes:"Quick coffee on Laugavegur. Pick up any last souvenirs. Vínbúðin (liquor store) for Icelandic spirits to take home.",
+     map:"Vinbudin Austurstraeti Reykjavik" },
+   { time:"12:00 PM", title:"Drive to Keflavík Airport", type:"Logistics",
+     notes:"~45 min from Reykjavik to KEF. Allow extra time for car return." },
+   { time:"12:30 PM", title:"Return Ford Kuga — Saga Car Rental", type:"Logistics",
+     notes:"Return at KEF. Allow 30 min for car drop-off + shuttle to terminal.",
+     map:"Saga Car Rental Keflavik Airport" },
+   { time:"1:30 PM", title:"Check in + Security at KEF", type:"Logistics",
+     notes:"Icelandair recommends arriving 2.5 hrs before departure. Saga Lounge access if flying Premium." },
+   { time:"4:30 PM", title:"KEF → ORD — Icelandair FI853", type:"Flight", status:"booked",
+     notes:"Departs 4:30pm, arrives 5:20pm.",
+     conf:"FCSETK (AA) · AS7VVE (Icelandair)", site:{label:"icelandair.com", url:"https://www.icelandair.com"},
+     map:"Keflavik International Airport" },
+   { time:"7:01 PM", title:"ORD → DFW — AA3327", type:"Flight", status:"booked",
+     notes:"Departs 7:01pm, arrives 9:50pm. Nonstop, 2h 49m, seats 17E/17F. ~1h 40m connection at ORD.",
+     conf:"NGJUDC", site:{label:"aa.com", url:"https://www.aa.com"},
+     map:"Chicago O'Hare International Airport" },
+ ]},
+];
+
+const BOOKINGS = [
+ { cat:"Flights", name:"DFW → ORD — AA2710 (2 travelers)", dates:"Dec 29", status:"booked", conf:"WAALKC", cost:null, note:"Economy · seats 11A/11B · aa.com" },
+ { cat:"Flights", name:"ORD → KEF — Icelandair FI852 (2 travelers)", dates:"Dec 29", status:"booked", conf:"FCSETK / AS7VVE", cost:2261, note:"Economy Flex or Saga Premium Flex · icelandair.com" },
+ { cat:"Flights", name:"KEF → ORD — Icelandair FI853 (2 travelers)", dates:"Jan 4", status:"booked", conf:"FCSETK / AS7VVE", cost:null, note:"Economy Flex or Saga Premium Flex · icelandair.com" },
+ { cat:"Flights", name:"ORD → DFW — AA3327 (2 travelers)", dates:"Jan 4", status:"booked", conf:"NGJUDC", cost:null, note:"Seats 17E/17F · aa.com" },
+ { cat:"Transport", name:"Ford Kuga AWD — Saga Car Rental", dates:"Dec 30 – Jan 4", status:"booked", conf:"26-KEF-2109", cost:847, note:"5 days · AWD · Premium Protection · paid in full · sagacarrental.is" },
+ { cat:"Lodging", name:"Alda Hotel — King Deluxe w/ Balcony", dates:"Dec 30", status:"booked", conf:"30718SG104695", cost:655, note:"Refundable daily rate · pay on arrival" },
+ { cat:"Lodging", name:"Panorama Glass Lodge — Heimdall Cabin", dates:"Dec 31 – Jan 3", status:"paid", conf:"Booking #63919", cost:3020, note:"3 nights · 2 adults · PAID €2,596.50 · €30 refund due" },
+ { cat:"Lodging", name:"Alda Hotel — King Deluxe w/ Balcony", dates:"Jan 3", status:"booked", conf:"30718SG104696", cost:319, note:"Refundable daily rate · pay on arrival" },
+ { cat:"Experience", name:"Blue Lagoon — Comfort Package (2 people)", dates:"Dec 30, ~8am", status:"todo", conf:null, cost:200, note:"Book the 8am slot · bluelagoon.com" },
+ { cat:"Experience", name:"ÓX Restaurant — Tasting Menu (2 people)", dates:"Dec 30 eve", status:"paid", conf:"Receipt #9552594", cost:1145, note:"ISK 144,000 prepaid in full, Oct 1, under Camille" },
+ { cat:"Spa", name:"Sky Lagoon — Skjól Ritual (2 people)", dates:"Dec 31", status:"todo", conf:null, cost:120, note:"skylagoon.com · book ahead" },
+ { cat:"Activity", name:"Langjökull Ice Cave Tour (2 people)", dates:"Jan 2", status:"booked", conf:"ARC-T137654036", cost:444, note:"Invoice C-561245575 · paid in full · intotheglacier.is" },
+ { cat:"Tour", name:"Private Golden Circle Tour — Bjarni", dates:"Jan 3", status:"booked", conf:"1765053271 / 1382395547", cost:986, note:"Auto-charges card ending 3480 on Jan 1, 2027 · viator.com" },
+ { cat:"Dining", name:"Bjargarsteinn — Borgarnes (Jan 1 lunch)", dates:"Jan 1", status:"todo", conf:null, cost:150, note:"Gourmet seafood · booking recommended" },
+ { cat:"Dining", name:"Farewell dinner — Reykjavik (Jan 3)", dates:"Jan 3 eve", status:"todo", conf:null, cost:150, note:"Sumac, next to ÓX, or similar on Laugavegur" },
+];
+
+const PACKING = [
+ { group:"Clothing", items:[
+   ["Thermal base layers (2–3 sets)","Merino wool preferred — dries fast, stays warm"],
+   ["Waterproof shell jacket","Windproof is essential, especially Snæfellsnes"],
+   ["Waterproof trousers","For outdoor stops, waterfalls, lava fields"],
+   ["Fleece or down mid-layer","Layering is key in variable Iceland weather"],
+   ["Warm hat + gloves","Wool or fleece — bring an extra pair"],
+   ["Neck gaiter or balaclava","Wind chill is brutal in January"],
+   ["Wool socks (4 pairs)","Change frequently — keep feet dry"],
+   ["Waterproof hiking boots","Ankle support, rated to -10°C minimum"],
+   ["Microspike crampons (clip-on)","Essential for icy paths — buy before you go"],
+   ["Sleeping mask","Glass lodge ceiling — moon can be very bright"],
+   ["Smart casual outfit for ÓX dinner","ÓX is relaxed but it is a Michelin restaurant"],
+ ]},
+ { group:"Tech & Apps", items:[
+   ["Vedur app — Icelandic Met Office","Aurora forecast + weather — check nightly"],
+   ["Road.is app","Real-time road conditions — check every morning"],
+   ["Maps.me or offline Google Maps","Download Iceland offline maps before you go"],
+   ["Power bank (large capacity)","Cold weather drains batteries very fast"],
+   ["EU Type F power adapter","Iceland uses European plugs"],
+   ["Camera + extra batteries","Keep spare battery warm in inner pocket"],
+   ["Headlamp or flashlight","Useful at the lodge for night aurora walks"],
+ ]},
+ { group:"Health & Docs", items:[
+   ["Travel insurance documents","Essential — covers volcanic disruption & medical"],
+   ["Passports (valid 6+ months)","Check expiry before you travel"],
+   ["Prescription medications","Pharmacies limited outside Reykjavik"],
+   ["Hand warmers (disposable, 10+ pairs)","Cold at waterfalls and outdoor stops"],
+   ["Sunscreen + SPF lip balm","Snow reflection is intense even in winter"],
+   ["Motion sickness tablets","Mountain roads can be winding"],
+ ]},
+ { group:"Key reminders", items:[
+   ["Book Blue Lagoon soon","Dec 30, 8am slot · bluelagoon.com"],
+   ["Book Sky Lagoon","Dec 31 · skylagoon.com"],
+   ["Reserve Bjargarsteinn","Jan 1 lunch, Borgarnes — can fill up"],
+   ["Check road.is every morning","Road closures can happen overnight in winter"],
+   ["Fuel up whenever you can","Gas stations sparse outside Reykjavik"],
+   ["Buy champagne before leaving Reykjavik","Vínbúðin (state liquor store), Dec 31 morning"],
+   ["Only 4–5 hrs daylight in late December","Start all drives by 9am to maximize light"],
+   ["Aurora best 10pm–2am","Check KP index AND cloud cover together"],
+   ["Car drop-off Jan 4 — allow 30 min","Blue Car shuttle from lot to KEF terminal"],
+ ]},
+];
+
+/* ---------------- helpers ---------------- */
+function mapUrl(q){ return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q); }
+function esc(s){ return (s==null?"":String(s)).replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+const pinSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-7.1 7-12.5A7 7 0 0 0 5 9.5C5 14.9 12 22 12 22z"/><circle cx="12" cy="9.5" r="2.3"/></svg>';
+const linkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M10 14 20 4M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>';
+
+function statusBadge(status){
+  if(status==="booked") return '<span class="badge status-booked"><span class="dot"></span>Booked</span>';
+  if(status==="paid") return '<span class="badge status-paid"><span class="dot"></span>Paid in full</span>';
+  if(status==="todo") return '<span class="badge status-todo"><span class="dot"></span>To book</span>';
+  return "";
+}
+
+function renderStop(s){
+  let out = '<div class="stop">';
+  out += '<div class="time">'+esc(s.time)+'</div>';
+  out += '<div class="body">';
+  out += '<div class="row1"><span class="title">'+esc(s.title)+'</span>';
+  out += '<span style="display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end">';
+  out += '<span class="badge type">'+esc(s.type)+'</span>';
+  out += statusBadge(s.status);
+  out += '</span></div>';
+  if(s.notes) out += '<div class="notes">'+esc(s.notes)+'</div>';
+  if(s.conf) out += '<div class="conf">Confirmation: <b class="mono copyconf" data-conf="'+esc(s.conf)+'" title="Tap to copy" style="cursor:pointer">'+esc(s.conf)+'</b></div>';
+  let links = [];
+  if(s.map) links.push('<a href="'+mapUrl(s.map)+'" target="_blank" rel="noopener">'+pinSvg+'Map</a>');
+  if(s.site) links.push('<a href="'+s.site.url+'" target="_blank" rel="noopener">'+linkSvg+esc(s.site.label)+'</a>');
+  if(links.length) out += '<div class="linkrow">'+links.join("")+'</div>';
+  out += '</div></div>';
+  return out;
+}
+
+function renderDay(d){
+  let out = '<div class="view" id="view-'+d.id+'">';
+  out += '<div class="daytitle"><span class="eyebrow">Day '+d.num+' · '+esc(d.date)+'</span><h2>'+esc(d.theme)+'</h2></div>';
+  d.stops.forEach(s=> out += renderStop(s));
+  out += '</div>';
+  return out;
+}
+
+function renderBookings(){
+  let out = '<div class="view" id="view-bookings">';
+  out += '<div class="daytitle"><span class="eyebrow">Every reservation</span><h2>Bookings &amp; confirmations</h2></div>';
+  out += '<div class="ledger">';
+  let total = 0;
+  BOOKINGS.forEach(b=>{
+    if(typeof b.cost === "number") total += b.cost;
+    out += '<div class="lcard"><div class="top">';
+    out += '<div><div class="cat">'+esc(b.cat)+'</div><div class="name">'+esc(b.name)+'</div></div>';
+    out += '<div class="cost">'+(b.cost!=null ? "$"+b.cost.toLocaleString() : "—")+'</div>';
+    out += '</div>';
+    out += '<div class="meta">'+esc(b.dates)+' &nbsp;·&nbsp; '+statusBadge(b.status)+'</div>';
+    if(b.conf) out += '<div class="conf">Confirmation: <b class="mono copyconf" data-conf="'+esc(b.conf)+'" style="cursor:pointer" title="Tap to copy">'+esc(b.conf)+'</b></div>';
+    if(b.note) out += '<div class="meta" style="margin-top:4px">'+esc(b.note)+'</div>';
+    out += '</div>';
+  });
+  out += '</div>';
+  out += '<div class="totals"><span class="label">Estimated total (USD)</span><span class="amt">$'+total.toLocaleString()+'</span></div>';
+  out += '<div class="meta" style="color:var(--muted);font-size:.78rem;margin-top:2px">+ 63,000 AA miles (DFW↔ORD) &middot; + ~$600 dining, gas &amp; incidentals not itemized above</div>';
+  out += '</div>';
+  return out;
+}
+
+function renderPacking(){
+  let out = '<div class="view" id="view-packing">';
+  out += '<div class="daytitle"><span class="eyebrow">Before you fly</span><h2>Packing &amp; reminders</h2></div>';
+  PACKING.forEach((g,gi)=>{
+    out += '<div class="pgroup"><h3>'+esc(g.group)+'</h3>';
+    g.items.forEach((it,ii)=>{
+      const id = "pk-"+gi+"-"+ii;
+      out += '<div class="pitem" data-id="'+id+'">';
+      out += '<input type="checkbox" id="'+id+'">';
+      out += '<div><label for="'+id+'">'+esc(it[0])+'</label><div class="sub">'+esc(it[1])+'</div></div>';
+      out += '</div>';
+    });
+    out += '</div>';
+  });
+  out += '</div>';
+  return out;
+}
+
+/* ---------------- build ---------------- */
+let viewsHtml = "";
+DAYS.forEach(d=> viewsHtml += renderDay(d));
+viewsHtml += renderBookings();
+viewsHtml += renderPacking();
+document.getElementById("views").innerHTML = viewsHtml;
+
+let tabsHtml = "";
+DAYS.forEach(d=>{
+  tabsHtml += '<a href="#'+d.id+'" data-route="'+d.id+'"><b>'+d.num+'</b>'+esc(d.date.split("· ")[1]||d.date)+'</a>';
+});
+tabsHtml += '<a href="#bookings" data-route="bookings" class="sep"><b>&#128274;</b>Bookings</a>';
+tabsHtml += '<a href="#packing" data-route="packing"><b>&#127919;</b>Packing</a>';
+document.getElementById("tabRail").innerHTML = tabsHtml;
+
+const bookedCount = BOOKINGS.filter(b=>b.status==="booked"||b.status==="paid").length;
+const todoCount = BOOKINGS.filter(b=>b.status==="todo").length;
+const total = BOOKINGS.reduce((a,b)=> a + (b.cost||0), 0);
+document.getElementById("statRow").innerHTML =
+  '<span class="stat">Confirmed <b>'+bookedCount+'</b></span>'+
+  '<span class="stat">To book <b>'+todoCount+'</b></span>'+
+  '<span class="stat">Est. total <b>$'+total.toLocaleString()+'</b></span>';
+
+/* ---------------- routing ---------------- */
+const validRoutes = DAYS.map(d=>d.id).concat(["bookings","packing"]);
+function go(route){
+  if(!validRoutes.includes(route)) route = DAYS[0].id;
+  document.querySelectorAll(".view").forEach(v=> v.classList.remove("active"));
+  const el = document.getElementById("view-"+route);
+  if(el) el.classList.add("active");
+  document.querySelectorAll("nav.tabs a").forEach(a=>{
+    a.classList.toggle("active", a.getAttribute("data-route")===route);
+  });
+  const activeTab = document.querySelector('nav.tabs a[data-route="'+route+'"]');
+  if(activeTab) activeTab.scrollIntoView({inline:"center", block:"nearest"});
+  window.scrollTo({top:0});
+}
+window.addEventListener("hashchange", ()=> go(location.hash.slice(1)));
+go(location.hash ? location.hash.slice(1) : DAYS[0].id);
+
+/* ---------------- copy confirmations ---------------- */
+document.addEventListener("click", function(e){
+  const t = e.target.closest(".copyconf");
+  if(!t) return;
+  const val = t.getAttribute("data-conf");
+  const prev = t.textContent;
+  function flash(){ t.textContent = "Copied"; setTimeout(()=> t.textContent = prev, 1100); }
+  try{
+    navigator.clipboard.writeText(val).then(flash).catch(()=>{
+      const r = document.createRange(); r.selectNodeContents(t);
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    });
+  }catch(err){
+    const r = document.createRange(); r.selectNodeContents(t);
+    const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+  }
+});
+
+/* ---------------- packing persistence (per-viewer only) ---------------- */
+try{
+  const saved = JSON.parse(localStorage.getItem("iceland-packing")||"{}");
+  document.querySelectorAll('.pitem input[type=checkbox]').forEach(cb=>{
+    const id = cb.closest(".pitem").getAttribute("data-id");
+    if(saved[id]){ cb.checked = true; cb.closest(".pitem").classList.add("checked"); }
+  });
+}catch(e){}
+document.addEventListener("change", function(e){
+  if(e.target.matches('.pitem input[type=checkbox]')){
+    const item = e.target.closest(".pitem");
+    item.classList.toggle("checked", e.target.checked);
+    try{
+      const saved = JSON.parse(localStorage.getItem("iceland-packing")||"{}");
+      saved[item.getAttribute("data-id")] = e.target.checked;
+      localStorage.setItem("iceland-packing", JSON.stringify(saved));
+    }catch(err){}
+  }
+});
+
+})();
+</script>
+</body>
+</html>
