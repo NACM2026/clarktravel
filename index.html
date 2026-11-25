@@ -270,6 +270,41 @@ main{ padding:18px 0 calc(82px + env(safe-area-inset-bottom,0px)); }
 .pitem .sub{ color:var(--muted); font-size:.8rem; margin-top:1px; }
 .pitem.checked label, .pitem.checked .sub{ text-decoration:line-through; opacity:.5; }
 
+/* jet lag */
+.jl{ border:1px solid var(--line); background:var(--surface); border-radius:12px; box-shadow:var(--shadow); margin:0 0 14px; overflow:hidden; }
+.jl > summary{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 14px; cursor:pointer; list-style:none; -webkit-tap-highlight-color:transparent; }
+.jl > summary::-webkit-details-marker{ display:none; }
+.jl > summary::marker{ content:""; }
+.jl[open] > summary .chevron{ transform:rotate(180deg); }
+.jl .jlhead{ font-weight:600; font-size:.9rem; }
+.jl .jlsub{ color:var(--muted); font-size:.74rem; margin-top:1px; }
+.jl .jlbody{ padding:2px 14px 12px; border-top:1px solid var(--line); }
+.jlrow{ display:flex; gap:10px; align-items:baseline; padding:6px 0; border-bottom:1px dashed var(--line); font-size:.84rem; }
+.jlrow:last-child{ border-bottom:none; }
+.jlrow .t{ flex:0 0 118px; font-family:'JetBrains Mono',monospace; font-size:.74rem; color:var(--muted); }
+.jlk{ display:inline-flex; align-items:center; gap:5px; font-size:.68rem; font-weight:600; padding:2px 8px 2px 6px; border-radius:99px; white-space:nowrap; flex:none; }
+.jlk .dot{ width:7px; height:7px; border-radius:50%; background:currentColor; }
+.jlk.bright{ background:var(--amber-bg); color:var(--amber-fg); }
+.jlk.bright .dot{ background:var(--amber); box-shadow:0 0 0 2px rgba(242,176,61,.35); }
+.jlk.some{ background:var(--amber-bg); color:var(--amber-fg); opacity:.8; }
+.jlk.avoid{ background:var(--surface-2); color:var(--muted); }
+.jlk.avoid .dot{ background:transparent; border:1.5px solid currentColor; }
+.jlk.cafok{ background:var(--green-bg); color:var(--green-fg); }
+.jlk.cafno{ background:var(--surface-2); color:var(--muted); text-decoration:line-through; }
+.jlk.sleep{ background:var(--blue-bg); color:var(--blue-fg); }
+.jlk.nap{ background:var(--blue-bg); color:var(--blue-fg); opacity:.8; }
+.jlk.flight{ background:var(--surface-2); color:var(--accent2); }
+.jlk.info{ background:var(--surface-2); color:var(--fg); }
+.jlrow .txt{ flex:1; min-width:0; }
+.jlrow .txt small{ display:block; color:var(--muted); font-size:.74rem; margin-top:1px; }
+.jlnote{ font-size:.78rem; color:var(--amber-fg); background:var(--amber-bg); border-radius:8px; padding:7px 10px; margin-top:8px; line-height:1.45; }
+.jllink{ display:inline-block; margin-top:8px; font-size:.76rem; font-weight:600; color:var(--accent); text-decoration:none; }
+.jlintro{ color:var(--muted); font-size:.86rem; line-height:1.5; margin:-4px 0 12px; }
+.jlintro ul{ margin:6px 0 0; padding-left:18px; }
+.jlsec{ font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; color:var(--accent2); margin:18px 0 8px; font-family:'Inter'; font-weight:700; }
+.jllegend{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 6px; }
+@media (max-width:480px){ .jlrow .t{ flex-basis:96px; font-size:.7rem; } }
+
 footer{ text-align:center; color:var(--muted); font-size:.74rem; padding:10px 0 30px; }
 
 @media (max-width:480px){
@@ -322,7 +357,7 @@ const DAYS = [
      notes:"No status, no confirmation number needed for this one — just a reminder that of all the places this life could take me, being next to you is still my favorite. I love you, Camille." },
  ]},
  { id:"day-2", num:2, date:"Wed · Dec 30", theme:"Arrival · Blue Lagoon · Reykjavik", stops:[
-   { time:"5:50 AM", title:"Arrive Keflavík (KEF)", type:"Flight", status:"booked",
+   { time:"6:45 AM", title:"Arrive Keflavík (KEF)", type:"Flight", status:"booked",
      notes:"Clear immigration, collect bags. Allow ~1.5 hrs to exit terminal.",
      map:"Keflavik International Airport" },
    { time:"7:30 AM", title:"Pick up Ford Kuga — Saga Car Rental", type:"Logistics", status:"booked",
@@ -391,9 +426,9 @@ const DAYS = [
    { time:"11:00 AM", title:"Explore Borgarnes area", type:"Sightseeing",
      notes:"Short drive to Borgarnes town (~15 min). Waterfront walk, Settlement Centre museum, fjord views.",
      map:"Borgarnes Iceland" },
-   { time:"1:00 PM", title:"Lunch — Bjargarsteinn Restaurant", type:"Dining", status:"todo",
-     notes:"Gourmet seafood in Borgarnes — lobster, scallops, cod. Open daily noon–11pm. Booking recommended.",
-     map:"Bjargarsteinn Mathus Borgarnes" },
+   { time:"1:00 PM", title:"Lunch in Borgarnes — restaurant TBD", type:"Dining", status:"todo",
+     notes:"Pick one: Settlement Centre Restaurant, Englendingavík or Grillhusið (from Panorama's list). Confirm New Year's Day hours before booking.",
+     map:"Borgarnes Iceland restaurants" },
    { time:"3:00 PM", title:"Afternoon at lodge", type:"Experience",
      notes:"Hot tub, hammock, read, nap. Enjoy the views of Snæfellsnes peninsula across the water." },
    { time:"Evening", title:"Aurora watch from hot tub", type:"Experience",
@@ -489,7 +524,7 @@ const BOOKINGS = [
  { cat:"Spa", name:"Sky Lagoon — Skjól Ritual (2 people)", dates:"Dec 31", status:"todo", conf:null, cost:120, note:"skylagoon.com · book ahead" },
  { cat:"Activity", name:"Langjökull Ice Cave Tour (2 people)", dates:"Jan 2", status:"booked", conf:"ARC-T137654036", cost:444, note:"Invoice C-561245575 · paid in full · intotheglacier.is", qr:QR_GLACIER },
  { cat:"Tour", name:"Private Golden Circle Tour — Bjarni", dates:"Jan 3", status:"booked", conf:"1765053271 / 1382395547", cost:986, note:"Auto-charges card ending 3480 on Jan 1, 2027 · viator.com" },
- { cat:"Dining", name:"Bjargarsteinn — Borgarnes (Jan 1 lunch)", dates:"Jan 1", status:"todo", conf:null, cost:150, note:"Gourmet seafood · booking recommended" },
+ { cat:"Dining", name:"Borgarnes lunch — restaurant TBD (Jan 1)", dates:"Jan 1", status:"todo", conf:null, cost:150, note:"Options: Settlement Centre Restaurant · Englendingavík · Grillhusið · confirm Jan 1 hours · cost is a placeholder" },
  { cat:"Dining", name:"Matarkjallarinn (Food Cellar) — Farewell Dinner (2)", dates:"Jan 3, 7:30 PM", status:"booked", conf:"#9800030", cost:150, note:"Aðalstræti 2 · 7:30–9:30 PM · under Camille · show email at reception · cancel via Dineout link · cost is an estimate" },
 ];
 
@@ -506,6 +541,7 @@ const PACKING = [
    ["Microspike crampons (clip-on)","Essential for icy paths — buy before you go"],
    ["Sleeping mask","Glass lodge ceiling — moon can be very bright"],
    ["Smart casual outfit for ÓX dinner","ÓX is relaxed but it is a Michelin restaurant"],
+   ["Sunglasses (both of you)","For the 'avoid light' windows in the jet lag plan"],
  ]},
  { group:"Tech & Apps", items:[
    ["Vedur app — Icelandic Met Office","Aurora forecast + weather — check nightly"],
@@ -515,6 +551,7 @@ const PACKING = [
    ["EU Type F power adapter","Iceland uses European plugs"],
    ["Camera + extra batteries","Keep spare battery warm in inner pocket"],
    ["Headlamp or flashlight","Useful at the lodge for night aurora walks"],
+   ["Timeshifter app","Jet lag plan starts Sun, Dec 27 at 7am — exact times live here"],
  ]},
  { group:"Health & Docs", items:[
    ["Travel insurance documents","Essential — covers volcanic disruption & medical"],
@@ -525,8 +562,8 @@ const PACKING = [
    ["Motion sickness tablets","Mountain roads can be winding"],
  ]},
  { group:"Key reminders", items:[
-      ["Book Sky Lagoon","Dec 31 · skylagoon.com"],
-   ["Reserve Bjargarsteinn","Jan 1 lunch, Borgarnes — can fill up"],
+   ["Book Sky Lagoon","Dec 31 · skylagoon.com"],
+   ["Pick Jan 1 lunch spot in Borgarnes","Settlement Centre, Englendingavík or Grillhusið — confirm holiday hours"],
    ["Check road.is every morning","Road closures can happen overnight in winter"],
    ["Fuel up whenever you can","Gas stations sparse outside Reykjavik"],
    ["Buy champagne before leaving Reykjavik","Vínbúðin (state liquor store), Dec 31 morning"],
@@ -535,6 +572,60 @@ const PACKING = [
    ["Car drop-off Jan 4 — allow 30 min","Blue Car shuttle from lot to KEF terminal"],
  ]},
 ];
+
+/* ---------------- jet lag plan (Timeshifter) ----------------
+   Row: [time, kind, text, subtext]. kinds: bright, some, avoid, cafok, cafno, sleep, nap, flight, info */
+const JETLAG = [
+ { key:"dec27", leg:"going", date:"Sun · Dec 27", tz:"Dallas time", tag:"Plan starts 7am", rows:[
+   ["7am – 10am","bright"],["7am – 12pm","cafok"],["10am – 4pm","some"],["12pm – 9pm","cafno"],
+   ["8pm – 9pm","avoid"],["9pm","sleep","Go to sleep"] ]},
+ { key:"dec28", leg:"going", date:"Mon · Dec 28", tz:"Dallas time", rows:[
+   ["Until 6am","sleep","Sleep (since 9pm Sunday)"],["6am – 9am","bright"],["6am – 11am","cafok"],["9am – 3pm","some"],
+   ["11am – 8pm","cafno"],["7pm – 8pm","avoid"],["8pm","sleep","Go to sleep"] ]},
+ { key:"dec29", leg:"going", date:"Tue · Dec 29", tz:"Dallas time", tag:"Travel day", rows:[
+   ["Until 5am","sleep","Sleep (since 8pm Monday)"],["5am – 8am","bright"],["5am – 10am","cafok"],["8am – 12pm","some"],
+   ["10am – 7pm","cafno"],
+   ["~12pm","flight","First flight departs","AA2710 is scheduled 11:41 AM"],
+   ["12pm – 1pm","nap","Nap"],["1pm – 3pm","some"],
+   ["~3pm","flight","First flight lands","Scheduled 2:09 PM at ORD"],
+   ["~7pm","flight","Flight to Iceland departs","FI852 is scheduled 6:30 PM"],
+   ["7pm – 12am","sleep","Sleep on the plane"] ]},
+ { key:"dec30", leg:"going", date:"Wed · Dec 30", tz:"Dallas time, then Reykjavik time", rows:[
+   ["12am Dallas = 6am Rvk","info","Wake up on the plane","Start bright light; caffeine OK"],
+   ["1am Dallas = 7am Rvk","flight","Land in Reykjavik","Switch your clock to Reykjavik time · FI852 is scheduled 6:45 AM"],
+   ["6am – 10am","bright"],["6am – 1pm","cafok"],["10am – 5pm","some"],["1pm – 10pm","cafno"],
+   ["9pm – 10pm","avoid"],["10pm","sleep","Go to sleep"] ],
+   note:"Conflict: ÓX dinner starts 6:15 PM and runs about 4 hours, so you won't be in bed by 10 PM. Keep the no-caffeine rule (skip coffee with dessert), dim your phone and go to sleep as soon as you're back at the hotel." },
+ { key:"dec31", leg:"going", date:"Thu · Dec 31", tz:"Reykjavik time", tag:"Done", rows:[
+   ["Until 7am","sleep","Sleep (since 10pm Wednesday)"],
+   ["—","info","Plan complete","You should be adjusted to Reykjavik time"] ]},
+ { key:"jan2", leg:"return", date:"Sat · Jan 2", tz:"Reykjavik time", tag:"Plan starts 7am", rows:[
+   ["7am – 11am","avoid","Avoid light","Sunglasses on the drive to Húsafell"],["7am – 2pm","cafok"],["2pm – 11pm","cafno"],
+   ["6pm – 10pm","some"],["10pm – 11pm","avoid"],["11pm","sleep","Go to sleep"] ]},
+ { key:"jan3", leg:"return", date:"Sun · Jan 3", tz:"Reykjavik time", rows:[
+   ["Until 8am","sleep","Sleep (since 11pm Saturday)"],["8am – 12pm","avoid","Avoid light","Sunglasses for the Golden Circle pickup"],
+   ["8am – 3pm","cafok"],["3pm – 12am","cafno"],["7pm – 11pm","some"],["11pm – 12am","avoid"],["12am","sleep","Go to sleep"] ]},
+ { key:"jan4", leg:"return", date:"Mon · Jan 4", tz:"Reykjavik time, then Chicago time", tag:"Travel day", rows:[
+   ["12am – 9am","sleep","Sleep"],["9am – 1pm","avoid"],["9am – 5pm","cafok"],
+   ["~5pm","flight","Flight leaves Iceland","FI853 is scheduled 4:30 PM"],
+   ["5pm – 7pm","sleep","Sleep on the plane"],["7pm – 9pm","cafok"],["After 9pm","cafno"],["8pm – 12am","nap","Nap"],
+   ["12am Rvk = 6pm Chicago","flight","Land in Chicago","Switch your clock to Chicago time · FI853 is scheduled 5:20 PM"],
+   ["6pm – 10pm","some","See some light","Chicago time"],
+   ["~7pm – 10pm","flight","Connecting flight","AA3327 is scheduled 7:01 – 9:50 PM"],
+   ["10pm – 12am","bright","See bright light","Chicago/Dallas time"],["Through 12am","cafno"] ]},
+ { key:"jan5", leg:"return", date:"Tue · Jan 5", tz:"Dallas time", rows:[
+   ["12am – 9am","sleep","Sleep"],["9am – 1pm","cafok"],["1pm – 10pm","cafno"],["5pm – 9pm","some"],
+   ["9pm – 10pm","avoid"],["10pm","sleep","Go to sleep"] ]},
+ { key:"jan6", leg:"return", date:"Wed · Jan 6", tz:"Dallas time", tag:"Done", rows:[
+   ["Until 8am","sleep","Sleep (since 10pm Tuesday)"],
+   ["—","info","Plan complete","You should be adjusted to Dallas time"] ]},
+];
+const JL_LABEL = { bright:"See bright light", some:"See some light", avoid:"Avoid light", cafok:"Caffeine OK",
+  cafno:"No caffeine", sleep:"Sleep", nap:"Nap", flight:"Flight", info:"Note" };
+const JL_CHIP  = { bright:"Bright light", some:"Some light", avoid:"Avoid light", cafok:"Caffeine OK",
+  cafno:"Caffeine", sleep:"Sleep", nap:"Nap", flight:"Flight", info:"Note" };
+/* which trip day shows which plan day(s) */
+const JL_BY_DAY = { "day-1":["dec29"], "day-2":["dec30"], "day-3":["dec31"], "day-5":["jan2"], "day-6":["jan3"], "day-7":["jan4"] };
 
 /* ---------------- helpers ---------------- */
 function mapUrl(q){ return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q); }
@@ -590,9 +681,41 @@ function renderStop(s){
   return out;
 }
 
+function jlRows(day){
+  return day.rows.map(r=>{
+    const kind=r[1], text=r[2]||JL_LABEL[kind], sub=r[3];
+    return '<div class="jlrow"><span class="t">'+esc(r[0])+'</span>'+
+      '<span class="jlk '+kind+'"><span class="dot"></span>'+esc(JL_CHIP[kind])+'</span>'+
+      '<span class="txt">'+esc(text)+(sub?'<small>'+esc(sub)+'</small>':'')+'</span></div>';
+  }).join("") + (day.note ? '<div class="jlnote">'+esc(day.note)+'</div>' : '');
+}
+function jlCard(day, open){
+  return '<details class="jl"'+(open?' open':'')+'><summary><div>'+
+    '<div class="jlhead">'+(open?esc(day.date):'Jet lag plan')+(day.tag?' · '+esc(day.tag):'')+'</div>'+
+    '<div class="jlsub">'+esc(day.tz)+(open?'':' · light, caffeine &amp; sleep windows')+'</div></div>'+chevronSvg+'</summary>'+
+    '<div class="jlbody">'+jlRows(day)+(open?'':'<a class="jllink" href="#jetlag">Full jet lag plan →</a>')+'</div></details>';
+}
+function renderJetlag(){
+  let out = '<div class="view" id="view-jetlag">';
+  out += '<div class="daytitle"><span class="eyebrow">Timeshifter</span><h2>Jet lag plan</h2></div>';
+  out += '<div class="jlintro">Reykjavik is 6 hours ahead of Dallas/Chicago. Times are local to where you are; each travel day says when to switch.'+
+    '<ul><li>Times were read off the app\'s timeline, so they may be off by 15–30 min. Check Timeshifter for exact times.</li>'+
+    '<li>In late December the sun rises around 11 AM in Reykjavik, so for morning "bright light" use the brightest indoor light you can find.</li>'+
+    '<li>Flight times in the app are approximate; your booked times are shown underneath.</li></ul></div>';
+  out += '<div class="jllegend">'+["bright","some","avoid","cafok","cafno","sleep","nap"].map(k=>
+    '<span class="jlk '+k+'"><span class="dot"></span>'+esc(JL_LABEL[k])+'</span>').join("")+'</div>';
+  out += '<div class="jlsec">Going · Dallas → Iceland</div>';
+  JETLAG.filter(d=>d.leg==="going").forEach(d=> out += jlCard(d,true));
+  out += '<div class="jlsec">Return · Iceland → Dallas</div>';
+  JETLAG.filter(d=>d.leg==="return").forEach(d=> out += jlCard(d,true));
+  out += '</div>';
+  return out;
+}
+
 function renderDay(d){
   let out = '<div class="view" id="view-'+d.id+'">';
   out += '<div class="daytitle"><span class="eyebrow">Day '+d.num+' · '+esc(d.date)+'</span><h2>'+esc(d.theme)+'</h2></div>';
+  (JL_BY_DAY[d.id]||[]).forEach(k=>{ const jd=JETLAG.find(j=>j.key===k); if(jd) out += jlCard(jd,false); });
   d.stops.forEach(s=> out += renderStop(s));
   out += '</div>';
   return out;
@@ -696,12 +819,14 @@ viewsHtml += renderFiltered("flights", "In the air", "Flights",
 viewsHtml += renderFiltered("lodgings", "Where you're staying", "Lodgings",
   b=>b.cat==="Lodging", "No lodging logged yet.");
 viewsHtml += renderPacking();
+viewsHtml += renderJetlag();
 document.getElementById("views").innerHTML = viewsHtml;
 
 let tabsHtml = "";
 DAYS.forEach(d=>{
   tabsHtml += '<a href="#'+d.id+'" data-route="'+d.id+'"><b>'+esc(d.date.split("· ")[1]||d.date)+'</b></a>';
 });
+tabsHtml += '<a class="sep" href="#jetlag" data-route="jetlag"><b>Jet lag</b></a>';
 document.getElementById("tabRail").innerHTML = tabsHtml;
 
 const BOTTOM_NAV = [
@@ -727,9 +852,9 @@ document.getElementById("statRow").innerHTML =
   '<span class="stat">Est. total <b>$'+total.toLocaleString()+'</b></span>';
 
 /* ---------------- routing ---------------- */
-const validRoutes = DAYS.map(d=>d.id).concat(["bookings","packing","todo","confirmed","flights","lodgings"]);
+const validRoutes = DAYS.map(d=>d.id).concat(["bookings","packing","todo","confirmed","flights","lodgings","jetlag"]);
 function routeGroup(route){
-  if(DAYS.some(d=>d.id===route)) return "agenda";
+  if(DAYS.some(d=>d.id===route) || route==="jetlag") return "agenda";
   if(route==="bookings"||route==="todo"||route==="confirmed") return "bookings";
   if(route==="flights") return "flights";
   if(route==="lodgings") return "lodgings";
