@@ -329,9 +329,9 @@ const DAYS = [
      notes:"4WD SUV, Premium Protection included. Promo: YOURSAGA.",
      conf:"26-KEF-2109", site:{label:"sagacarrental.is", url:"https://sagacarrental.is"},
      map:"Saga Car Rental Keflavik Airport" },
-   { time:"8:00 AM", title:"Blue Lagoon — Arrival Soak", type:"Spa", status:"todo",
-     notes:"Comfort package minimum (towel, mud mask, drink). Book the 8am slot — perfect jet-lag cure, 20 min from airport.",
-     site:{label:"bluelagoon.com", url:"https://www.bluelagoon.com"},
+   { time:"8:00 AM", title:"Blue Lagoon — Arrival Soak", type:"Spa", status:"booked",
+     notes:"Premium admission for 2, arrive 8:00 AM. Show the barcode/voucher from the confirmation email at check-in. Free cancellation up to 24 hrs before. Perfect jet-lag cure, 20 min from airport.",
+     conf:"WBL06064828", site:{label:"my.bluelagoon.com", url:"https://my.bluelagoon.com"},
      map:"Blue Lagoon Iceland" },
    { time:"11:00 AM", title:"Drive to Reykjavik", type:"Logistics",
      notes:"~50 min from Blue Lagoon to city center." },
@@ -444,9 +444,10 @@ const DAYS = [
      notes:"King Deluxe w/ Balcony — same room type as Dec 30. Refundable Daily Rate $319.",
      conf:"30718SG104696", site:{label:"icelandhotelcollectionbyberjaya.com", url:"https://www.icelandhotelcollectionbyberjaya.com"},
      map:"Alda Hotel Reykjavik, Laugavegur 66" },
-   { time:"7:30 PM", title:"Farewell dinner — Reykjavik", type:"Dining", status:"todo",
-     notes:"Last dinner in Iceland. Try Sumac (ÓX's sister restaurant next door) or another Laugavegur favorite.",
-     map:"Sumac Reykjavik" },
+   { time:"7:30 PM", title:"Farewell dinner — Matarkjallarinn (Food Cellar)", type:"Dining", status:"booked",
+     notes:"Table for 2, 7:30–9:30 PM, under Camille. Aðalstræti 2. Show the confirmation email at reception and be on time.",
+     conf:"#9800030", site:{label:"dineout.is", url:"https://dineout.is"},
+     map:"Matarkjallarinn Food Cellar Aðalstræti 2 Reykjavik" },
  ]},
  { id:"day-7", num:7, date:"Mon · Jan 4", theme:"Departure Day", stops:[
    { time:"9:00 AM", title:"Checkout — Alda Hotel", type:"Logistics",
@@ -483,13 +484,13 @@ const BOOKINGS = [
  { cat:"Lodging", name:"Alda Hotel — King Deluxe w/ Balcony", dates:"Dec 30", status:"booked", conf:"30718SG104695", cost:655, note:"Refundable daily rate · pay on arrival" },
  { cat:"Lodging", name:"Panorama Glass Lodge — Heimdall Cabin", dates:"Dec 31 – Jan 3", status:"paid", conf:"Booking #63919", cost:3020, note:"3 nights · 2 adults · PAID €2,596.50 · €30 refund due" },
  { cat:"Lodging", name:"Alda Hotel — King Deluxe w/ Balcony", dates:"Jan 3", status:"booked", conf:"30718SG104696", cost:319, note:"Refundable daily rate · pay on arrival" },
- { cat:"Experience", name:"Blue Lagoon — Comfort Package (2 people)", dates:"Dec 30, ~8am", status:"todo", conf:null, cost:200, note:"Book the 8am slot · bluelagoon.com" },
+ { cat:"Experience", name:"Blue Lagoon — Premium Admission (2 people)", dates:"Dec 30, 8:00 AM", status:"booked", conf:"WBL06064828", cost:200, note:"Premium admission · 2 guests · under Camille · free cancellation up to 24 hrs before · manage at my.bluelagoon.com · cost is an estimate until receipt checked" },
  { cat:"Experience", name:"ÓX Restaurant — Tasting Menu (2 people)", dates:"Dec 30 eve", status:"paid", conf:"Receipt #9552594", cost:1145, note:"ISK 144,000 prepaid in full, Oct 1, under Camille" },
  { cat:"Spa", name:"Sky Lagoon — Skjól Ritual (2 people)", dates:"Dec 31", status:"todo", conf:null, cost:120, note:"skylagoon.com · book ahead" },
  { cat:"Activity", name:"Langjökull Ice Cave Tour (2 people)", dates:"Jan 2", status:"booked", conf:"ARC-T137654036", cost:444, note:"Invoice C-561245575 · paid in full · intotheglacier.is", qr:QR_GLACIER },
  { cat:"Tour", name:"Private Golden Circle Tour — Bjarni", dates:"Jan 3", status:"booked", conf:"1765053271 / 1382395547", cost:986, note:"Auto-charges card ending 3480 on Jan 1, 2027 · viator.com" },
  { cat:"Dining", name:"Bjargarsteinn — Borgarnes (Jan 1 lunch)", dates:"Jan 1", status:"todo", conf:null, cost:150, note:"Gourmet seafood · booking recommended" },
- { cat:"Dining", name:"Farewell dinner — Reykjavik (Jan 3)", dates:"Jan 3 eve", status:"todo", conf:null, cost:150, note:"Sumac, next to ÓX, or similar on Laugavegur" },
+ { cat:"Dining", name:"Matarkjallarinn (Food Cellar) — Farewell Dinner (2)", dates:"Jan 3, 7:30 PM", status:"booked", conf:"#9800030", cost:150, note:"Aðalstræti 2 · 7:30–9:30 PM · under Camille · show email at reception · cancel via Dineout link · cost is an estimate" },
 ];
 
 const PACKING = [
@@ -524,8 +525,7 @@ const PACKING = [
    ["Motion sickness tablets","Mountain roads can be winding"],
  ]},
  { group:"Key reminders", items:[
-   ["Book Blue Lagoon soon","Dec 30, 8am slot · bluelagoon.com"],
-   ["Book Sky Lagoon","Dec 31 · skylagoon.com"],
+      ["Book Sky Lagoon","Dec 31 · skylagoon.com"],
    ["Reserve Bjargarsteinn","Jan 1 lunch, Borgarnes — can fill up"],
    ["Check road.is every morning","Road closures can happen overnight in winter"],
    ["Fuel up whenever you can","Gas stations sparse outside Reykjavik"],
@@ -700,7 +700,7 @@ document.getElementById("views").innerHTML = viewsHtml;
 
 let tabsHtml = "";
 DAYS.forEach(d=>{
-  tabsHtml += '<a href="#'+d.id+'" data-route="'+d.id+'"><b>'+d.num+'</b>'+esc(d.date.split("· ")[1]||d.date)+'</a>';
+  tabsHtml += '<a href="#'+d.id+'" data-route="'+d.id+'"><b>'+esc(d.date.split("· ")[1]||d.date)+'</b></a>';
 });
 document.getElementById("tabRail").innerHTML = tabsHtml;
 
